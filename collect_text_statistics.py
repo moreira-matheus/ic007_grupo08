@@ -28,6 +28,8 @@ class TextStats():
     def extract_frequencies(self):
         stop_words = set(stopwords.words('portuguese'))
         # sem as stop words
+        ponctuation = ['.',',',':','(',')',';']
+        stop_words.update(ponctuation)
         filtered_sentence = [w for w in self.tokens if not w.lower() in stop_words]
         return pd.DataFrame.from_dict(Counter(filtered_sentence), orient="index").reset_index()\
     .rename(columns={'index':'Token', 0:'Freq'}).sort_values(by="Freq", ascending=False)
