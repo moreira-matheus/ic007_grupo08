@@ -31,14 +31,18 @@ class TextStats():
         ponctuation = ['.',',',':','(',')',';']
         stop_words.update(ponctuation)
         filtered_sentence = [w for w in self.tokens if not w.lower() in stop_words]
-        return pd.DataFrame.from_dict(Counter(filtered_sentence), orient="index").reset_index()\
-    .rename(columns={'index':'Token', 0:'Freq'}).sort_values(by="Freq", ascending=False)
+        return pd.DataFrame.from_dict(Counter(filtered_sentence), orient="index")\
+            .reset_index().rename(columns={'index':'Token', 0:'Freq'})\
+                .sort_values(by="Freq", ascending=False, ignore_index=True)
 
     def get_num_sentencas(self):
         return len(self.sentences)
         
     def get_num_tokens(self):
         return len(self.tokens)
+    
+    def get_num_tokens_unicos(self):
+        return len(set(self.tokens))
 
     def get_num_unique_tokens(self):
         len(set(self.tokens))

@@ -16,6 +16,7 @@ def show_text_data(curr_stat: TextStats) -> None:
     frequencies = curr_stat.extract_frequencies()
     num_sentencas = curr_stat.get_num_sentencas()
     num_tokens = curr_stat.get_num_tokens()
+    num_tokens_unicos = curr_stat.get_num_tokens_unicos()
 
     top_10_tokens = frequencies[['Token', 'Freq']].head(10)
     down_10_tokens = frequencies[['Token', 'Freq']].tail(10)
@@ -29,8 +30,11 @@ def show_text_data(curr_stat: TextStats) -> None:
 
     num_preposicoes = contagens['ADP']
 
+    print('-' * 10)
+    print('\nESTATÍSTICAS:\n')
     print(f'Número de Sentenças: {num_sentencas}\n')
     print(f'Número de Tokens: {num_tokens}\n')
+    print(f'Número de Tokens únicos: {num_tokens_unicos}\n')
     print(f'Top 10 Tokens')
     pprint(top_10_tokens)
     print()
