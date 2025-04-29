@@ -1,6 +1,7 @@
 import nltk
 import pandas as pd
 import spacy
+import string
 
 from collections import Counter
 
@@ -15,35 +16,31 @@ class TextStats():
         self.sentences = sent_tokenize(self.text)
         self.tokens =  word_tokenize(self.text)
 
-    def contar_por_classe_pos(self):
+    def count_by_pos_tag(self):
         nlp = spacy.load("pt_core_news_sm")
         doc = nlp(self.text)
         counts = doc.count_by(spacy.attrs.POS)
         mapper = {val:key for key, val in spacy.symbols.IDS.items()}
 
-        contagens = {mapper[key]: val for key, val in counts.items()}
+        counts_by_pos = {mapper[key]: val for key, val in counts.items()}
         
-        return contagens
+        return counts_by_pos
     
     def extract_frequencies(self):
         stop_words = set(stopwords.words('portuguese'))
-        # sem as stop words
-        ponctuation = ['.',',',':','(',')',';']
-        stop_words.update(ponctuation)
-        filtered_sentence = [w for w in self.tokens if not w.lower() in stop_words]
-        return pd.DataFrame.from_dict(Counter(filtered_sentence), orient="index")\
+        
+        filtered_tokens = [w for w in self.tokens if not w.lower() in stop_words]
+        filtered_tokens = [w for w in filtered_tokens if not w in string.punctuation]
+        return pd.DataFrame.from_dict(Counter(filtered_tokens), orient="index")\
             .reset_index().rename(columns={'index':'Token', 0:'Freq'})\
                 .sort_values(by="Freq", ascending=False, ignore_index=True)
 
-    def get_num_sentencas(self):
+    def get_num_sentences(self):
         return len(self.sentences)
         
     def get_num_tokens(self):
         return len(self.tokens)
-    
-    def get_num_tokens_unicos(self):
-        return len(set(self.tokens))
 
     def get_num_unique_tokens(self):
-        len(set(self.tokens))
+        return len(set(self.tokens))
         
