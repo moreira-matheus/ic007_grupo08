@@ -28,9 +28,16 @@ class TextStats():
     
     def extract_frequencies(self):
         stop_words = set(stopwords.words('portuguese'))
+        further_punctuation = [
+            ",", ".", ")", "(", "%", "|",
+            "[", "]", "=", "'", "}", ":",
+            ";", "˜"
+        ]
+        stop_words = stop_words.union(list(string.punctuation))
+        stop_words = stop_words.union(further_punctuation)
         
         filtered_tokens = [w for w in self.tokens if not w.lower() in stop_words]
-        filtered_tokens = [w for w in filtered_tokens if not w in string.punctuation]
+
         return pd.DataFrame.from_dict(Counter(filtered_tokens), orient="index")\
             .reset_index().rename(columns={'index':'Token', 0:'Freq'})\
                 .sort_values(by="Freq", ascending=False, ignore_index=True)

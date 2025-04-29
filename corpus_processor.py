@@ -23,9 +23,9 @@ class CorpusProcessor:
         replacements = {
             "c¸": "ç",
             "a˜": "ã", "˜a": "ã", "a´": "á", "aˆ": "â",
-            "´a": "á", "ˆa": "â",
+            "´a": "á", "ˆa": "â", "ˆa": "â",
             "´e": "é", "e´": "é", "ˆe": "ê", "eˆ": "ê",
-            "´i": "í", "´ı": "í",
+            "´i": "í", "´ı": "í", "´ı": "í",
             "˜o": "õ", "´o": "ó",
             "u´": "ú", "´u": "ú", "¨u": "ü"
             # Add more as needed
@@ -38,7 +38,7 @@ class CorpusProcessor:
     def pre_process_md(self, md_text_):
         #md_text = normalize('NFKD', md_text_).encode('ascii','ignore').decode("utf-8")
         md_text = self.fix_char_substitutions(md_text_)
-        md_text = re.sub(r'- ', '', md_text_).strip()
+        md_text = re.sub(r'- ', '', md_text).strip()
         md_text = re.sub(r'\n+', '\n', md_text).strip()
         md_text = re.sub(r"-{3,}", "", md_text).strip()
 
