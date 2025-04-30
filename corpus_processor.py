@@ -75,6 +75,7 @@ class CorpusProcessor:
             return None
         
         md_text = re.sub(r"\*{1,}", "", md_text_).strip()
+        md_text = re.sub(r"|{2,}", "", md_text).strip()
         md_text = re.sub(r"#{1,}", "", md_text).strip()
         md_text = re.sub(r"-\* \*", "", md_text).strip()
         md_text = re.sub(r"\* \*", " ", md_text).strip()
