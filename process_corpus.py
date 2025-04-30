@@ -7,7 +7,8 @@ from datetime import datetime
 from multiprocessing import Pool, cpu_count
 
 from utils import (
-    detect_language, fix_char_substitutions, translate_text, tokenize_text
+    detect_language, fix_char_substitutions,
+    translate_text, sentencize_text, tokenize_text
 )
 
 TGT_LANG = "pt"
@@ -18,7 +19,7 @@ class CorpusTemplate:
             "titulo", "informacoes_url", "idioma", "storage_key",
             "autores", "data_publicacao", "resumo", "keywords",
             "referencias", "artigo_completo", "artigo_tokenizado",
-            "pos_tagger", "lema", "dep"
+            "artigo_sentenciado", "pos_tagger", "lema", "dep"
         ]
 
         for field in fields:
@@ -46,7 +47,7 @@ class CorpusTemplate:
         return md_text
     
     def _extract_title(self, preprocessed_md_text):
-        pat = r"^#\s\*\*(.+)\*\*\n"
+        pat = r"^##?\s\*\*(.+)\*\*\n"
         match = re.search(pat, preprocessed_md_text)
         if match:
             return self._post_process_md(match.group(1))
@@ -158,6 +159,7 @@ class CorpusTemplate:
 
         token_list = tokenize_text(postprocessed_text)
         self.artigo_tokenizado = [token.get("token") for token in token_list]
+        self.artigo_sentenciado = sentencize_text(postprocessed_text)
         self.pos_tagger = [token.get("pos") for token in token_list]
         self.lema = [token.get("lemma") for token in token_list]
         self.dep = [token.get("dep") for token in token_list]

@@ -39,6 +39,11 @@ def translate_text(text, src_lang, tgt_lang):
     all_translated = [t for t in all_translated if t is not None]
     return ' '.join(all_translated)
 
+def sentencize_text(text):
+    nlp_model = spacy.load('pt_core_news_sm')
+    sentences = [sent.text for sent in nlp_model(text).sents]
+    return sentences
+
 def tokenize_text(text):
     nlp_model = spacy.load("pt_core_news_sm")
     tokens = []
@@ -51,3 +56,4 @@ def tokenize_text(text):
         })
 
     return tokens
+
