@@ -1,9 +1,17 @@
-
+import os
 import tqdm
 import spacy
 from langdetect import detect
 from nltk.tokenize import sent_tokenize
 from deep_translator import GoogleTranslator
+
+SPACY_MODEL = "pt_core_news_sm"
+
+def __download_spacy_model(model_name):
+    installed_models = spacy.util.get_installed_models()
+    if model_name not in installed_models:
+        cmd = f"python -m spacy download {model_name}"
+        os.system(cmd)
 
 def detect_language(text):
     return detect(text)
@@ -40,12 +48,20 @@ def translate_text(text, src_lang, tgt_lang):
     return ' '.join(all_translated)
 
 def sentencize_text(text):
-    nlp_model = spacy.load('pt_core_news_sm')
+    global SPACY_MODEL
+
+    __download_spacy_model(SPACY_MODEL)
+
+    nlp_model = spacy.load(SPACY_MODEL)
     sentences = [sent.text for sent in nlp_model(text).sents]
     return sentences
 
 def tokenize_text(text):
-    nlp_model = spacy.load("pt_core_news_sm")
+    global SPACY_MODEL
+
+    __download_spacy_model(SPACY_MODEL)
+
+    nlp_model = spacy.load(SPACY_MODEL)
     tokens = []
     for token in nlp_model(text):
         tokens.append({

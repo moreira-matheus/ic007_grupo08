@@ -8,7 +8,7 @@ from multiprocessing import Pool, cpu_count
 
 from utils import (
     detect_language, fix_char_substitutions,
-    translate_text, sentencize_text, tokenize_text
+    translate_text, tokenize_text
 )
 
 TGT_LANG = "pt"
@@ -19,7 +19,7 @@ class CorpusTemplate:
             "titulo", "informacoes_url", "idioma", "storage_key",
             "autores", "data_publicacao", "resumo", "keywords",
             "referencias", "artigo_completo", "artigo_tokenizado",
-            "artigo_sentenciado", "pos_tagger", "lema", "dep"
+            "pos_tagger", "lema", "dep"
         ]
 
         for field in fields:
@@ -30,6 +30,7 @@ class CorpusTemplate:
         md_text = re.sub(r'- ', '', md_text).strip()
         md_text = re.sub(r'\n+', '\n', md_text).strip()
         md_text = re.sub(r"-{3,}", "", md_text).strip()
+        md_text = re.sub(r"\|{2,}", "|", md_text).strip()
 
         return md_text
 
@@ -134,7 +135,12 @@ class CorpusTemplate:
     def process_text(self, full_fname):
         global TGT_LANG
 
-        raw_md_text = pymupdf4llm.to_markdown(full_fname)
+        raw_md_text = pymupdf4llm.to_markdown(
+            doc=full_fname,
+            ignore_images=True,
+            ignore_graphics=True,
+            table_strategy=None
+        )
         pre_processed_md = self._pre_process_md(raw_md_text)
 
         self.titulo = self._extract_title(pre_processed_md)
@@ -159,7 +165,6 @@ class CorpusTemplate:
 
         token_list = tokenize_text(postprocessed_text)
         self.artigo_tokenizado = [token.get("token") for token in token_list]
-        self.artigo_sentenciado = sentencize_text(postprocessed_text)
         self.pos_tagger = [token.get("pos") for token in token_list]
         self.lema = [token.get("lemma") for token in token_list]
         self.dep = [token.get("dep") for token in token_list]
