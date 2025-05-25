@@ -1,6 +1,7 @@
 import os
 import tqdm
 import spacy
+from itertools import tee
 from langdetect import detect
 from nltk.tokenize import sent_tokenize
 from deep_translator import GoogleTranslator
@@ -73,3 +74,13 @@ def tokenize_text(text):
 
     return tokens
 
+def sliding_window(iterable, n):
+    """Return a sliding window (of width n) over data from the iterable."""
+    iterators = tee(iterable, n)
+    for i, it in enumerate(iterators):
+        for _ in range(i):
+            next(it, None)
+    return zip(*iterators)
+
+def n_gram_tokens(token_list, n):
+    return sliding_window(token_list, n)
