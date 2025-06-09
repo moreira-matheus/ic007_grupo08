@@ -163,6 +163,7 @@ class CorpusTemplate:
         
         self.artigo_completo = postprocessed_text[:]
 
+        # faz o processamento de tokenizacao e pos tagger com spacy
         token_list = tokenize_text(postprocessed_text)
         self.artigo_tokenizado = [token.get("token") for token in token_list]
         self.pos_tagger = [token.get("pos") for token in token_list]
