@@ -158,8 +158,8 @@ class CorpusTemplate:
             if references_dict else None
 
         postprocessed_text = self._concat_sections(numbered_sections)
-        if self.idioma != TGT_LANG:
-            postprocessed_text = translate_text(postprocessed_text, self.idioma, TGT_LANG)
+        #if self.idioma != TGT_LANG:
+        postprocessed_text = translate_text(postprocessed_text, "auto", TGT_LANG)
         
         self.artigo_completo = postprocessed_text[:]
 
