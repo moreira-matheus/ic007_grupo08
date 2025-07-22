@@ -68,6 +68,9 @@ class BERTimbau:
         self.model = TFBertForMaskedLM.from_pretrained(folder_path, from_pt=False)
 
     def _sample_with_temperature(self, logits, temperature=1.0):
+        if temperature == 0:
+            return tf.argmax(logits).numpy()
+    
         logits = logits / temperature
         probs = tf.nn.softmax(logits).numpy()
         return np.random.choice(len(probs), p=probs)
