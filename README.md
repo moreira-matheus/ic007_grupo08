@@ -1,5 +1,12 @@
 # IC007: Tópicos Avançados em Bancos de Dados I - Grupo 08
 
+# Integrantes
+ - Mario Augusto
+ - Marcos Freire
+ - Matheus Moreira
+ - Lucas Mascarenhas
+ - Victor Cardel
+
 ## Notebook Interativo
 
 - `corpus_stats.ipynb`: lê o arquivo JSON com o corpus e extrai estatísticas descritivas.
