@@ -65,7 +65,7 @@ class BERTimbau:
 
     def load_from_folder(self, folder_path):
         self.tokenizer = BertTokenizer.from_pretrained(folder_path)
-        model = TFBertForMaskedLM.from_pretrained(folder_path, from_pt=False)
+        self.model = TFBertForMaskedLM.from_pretrained(folder_path, from_pt=False)
 
     def _sample_with_temperature(self, logits, temperature=1.0):
         logits = logits / temperature
