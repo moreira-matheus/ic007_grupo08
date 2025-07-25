@@ -1,19 +1,31 @@
-# IC007: Tópicos Avançados em Bancos de Dados I - Grupo 08
+# IC007 – Tópicos Avançados em Bancos de Dados I · Grupo 08
 
-# Integrantes
- - Mario Augusto
- - Marcos Freire
- - Matheus Moreira
- - Lucas Mascarenhas
- - Victor Cardel
+Este repositório contém os códigos, notebooks e dados utilizados no trabalho final da disciplina **PGCOMP/IC0007 – Tópicos Avançados em Bancos de Dados I (2025.1)**, com foco em análise linguística de textos científicos sobre **comunicação quântica**, utilizando técnicas de **Processamento de Linguagem Natural (PLN)**.
 
-## Notebook Interativo
+## 👥 Integrantes do Grupo 08
+- Lucas Mascarenhas Almeida
+- Mário Augusto Santos do Amor Divino
+- Marcus Elias Silva Freire  
+- Matheus Moreira Silva Rebouças dos Santos  
+- Victor Soares Cardel  
 
-- `corpus_stats.ipynb`: lê o arquivo JSON com o corpus e extrai estatísticas descritivas.
+## 🧪 Como Executar o Projeto
 
-## Processando o corpus:
-1. Crie um ambiente virtual: na raíz do projeto: `python3 -m venv venv`
-2. Entre no ambiente com: `source ./venv/bin/activate`
-3. Configure o ambiente com: `pip3 install -r requirements.txt`
-4. Instale o Modelo de Linguagem do Spacy: `python3 -m spacy download pt_core_news_sm`
-5. Execute o código com: `python3 process_corpus.py`
+Siga os passos abaixo para configurar e rodar o projeto localmente:
+
+```bash
+# 1. Crie um ambiente virtual
+python3 -m venv venv
+
+# 2. Ative o ambiente virtual
+source ./venv/bin/activate
+
+# 3. Instale as dependências
+pip install -r requirements.txt
+
+# 4. Baixe o modelo do spaCy para português
+python3 -m spacy download pt_core_news_sm
+
+# 5. Execute o script desejado
+python process_corpus.py
+```
